@@ -1,0 +1,9 @@
+###
+POST http://localhost:8080/addStore
+Content-Type: application/json
+
+{
+  "storeName": "매장 이름 test",
+  "storeAddress": "매장 주소 test",
+  "description": "매장 설명 test"
+}
