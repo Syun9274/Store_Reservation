@@ -5,6 +5,8 @@ import com.example.store_reservation.model.request.StoreRequest.AddStoreRequest;
 import com.example.store_reservation.repository.StoreRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
@@ -22,5 +24,10 @@ public class StoreService {
                 .build();
 
         return storeRepository.save(store);
+    }
+
+    @Transactional
+    public Page<Store> getAllStores(Pageable pageable) {
+        return storeRepository.findAll(pageable);
     }
 }
