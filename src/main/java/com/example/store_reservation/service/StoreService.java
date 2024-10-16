@@ -11,6 +11,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @RequiredArgsConstructor
 @Service
 public class StoreService {
@@ -27,5 +30,17 @@ public class StoreService {
     public Page<StoreDTO> getAllStores(Pageable pageable) {
         Page<Store> storePage = storeRepository.findAll(pageable);
         return storePage.map(store -> modelMapper.map(store, StoreDTO.class));
+    }
+
+    public List<String> getStoreNameByKeyword(String keyword, Pageable pageable) {
+        List<Store> storeList = storeRepository.findAllByStoreNameContainingIgnoreCase(keyword, pageable);
+
+        List<StoreDTO> storeDTOList = storeList.stream()
+                .map(store -> modelMapper.map(store, StoreDTO.class))
+                .toList();
+
+        return storeDTOList.stream()
+                .map(StoreDTO::getStoreName)
+                .collect(Collectors.toList());
     }
 }

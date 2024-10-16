@@ -7,3 +7,9 @@ Content-Type: application/json
   "storeAddress": "매장 주소 test",
   "description": "매장 설명 test"
 }
+
+###
+GET http://localhost:8080/search/all
+
+###
+GET http://localhost:8080/search/test
