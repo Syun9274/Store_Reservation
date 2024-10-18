@@ -10,8 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @RestController
 public class StoreController {
@@ -34,7 +32,7 @@ public class StoreController {
 
     @GetMapping("/search/{keyword}")
     public ResponseEntity<?> searchStoreByKeyword(@PathVariable("keyword") String keyword, final Pageable pageable) {
-        List<String> storeList = storeService.getStoreNameByKeyword(keyword, pageable);
+        Page<StoreDTO> storeList = storeService.getStoreNameByKeyword(keyword, pageable);
 
         return ResponseEntity.ok().body(storeList);
     }
