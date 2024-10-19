@@ -11,13 +11,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
+@RequestMapping("/store")
 @RestController
 public class StoreController {
 
     private final StoreService storeService;
 
-    @PostMapping("/addStore")
-    public ResponseEntity<?> addStore(@RequestBody AddStoreRequest request) {
+    @PostMapping("/create")
+    public ResponseEntity<?> createStore(@RequestBody AddStoreRequest request) {
         Store store = storeService.saveStore(request);
 
         return ResponseEntity.ok().body(store);
@@ -30,8 +31,8 @@ public class StoreController {
         return ResponseEntity.ok().body(storeList);
     }
 
-    @GetMapping("/search/{keyword}")
-    public ResponseEntity<?> searchStoreByKeyword(@PathVariable("keyword") String keyword, final Pageable pageable) {
+    @GetMapping("/search")
+    public ResponseEntity<?> searchStoreByKeyword(@RequestParam("keyword") String keyword, final Pageable pageable) {
         Page<StoreDTO> storeList = storeService.getStoreNameByKeyword(keyword, pageable);
 
         return ResponseEntity.ok().body(storeList);

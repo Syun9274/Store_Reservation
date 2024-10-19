@@ -13,22 +13,22 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity(name = "store")
-public class Store {
+@Entity(name = "user")
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String storeName;
+    private String username;
 
     @Column(nullable = false)
-    private String storeAddress;
+    private String password;
 
-    @Column(nullable = false)
-    private String description;
+    // 로그인 기능 추가 후 역할 부여
+    // private List<Authority> Role;
 
-    @OneToMany(mappedBy = "store", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations = new ArrayList<>();
 }
