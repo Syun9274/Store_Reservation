@@ -20,7 +20,7 @@ public class AuthRequest {
             return User.builder()
                     .username(username)
                     .password(password)
-                    .role(roles)
+                    .roles(roles)
                     .build();
         }
     }

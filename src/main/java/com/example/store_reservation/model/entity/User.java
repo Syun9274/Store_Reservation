@@ -7,8 +7,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 @Data
@@ -16,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity(name = "user")
-public class User {
+public class User implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,8 +33,15 @@ public class User {
     private String password;
 
     @Convert(converter = AuthorityConverter.class)
-    private List<Authority> role;
+    private List<Authority> roles;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations = new ArrayList<>();
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles.stream()
+                .map((Authority role) -> new SimpleGrantedAuthority(role.name()))
+                .toList();
+    }
 }

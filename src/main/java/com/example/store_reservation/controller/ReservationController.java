@@ -1,7 +1,6 @@
 package com.example.store_reservation.controller;
 
 import com.example.store_reservation.model.entity.Reservation;
-import com.example.store_reservation.model.entity.User;
 import com.example.store_reservation.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
