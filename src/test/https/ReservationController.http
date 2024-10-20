@@ -7,5 +7,13 @@ POST http://localhost:8080/reservation/cancel?storeName=store
 Authorization: Bearer
 
 ###
-POST http://localhost:8080/reservation/showList
+GET http://localhost:8080/reservation/showList
+Authorization: Bearer
+
+###
+POST http://localhost:8080/reservation/checkIn?storeName=store
+Authorization: Bearer
+
+###
+POST http://localhost:8080/reservation/checkOut?storeName=store
 Authorization: Bearer
