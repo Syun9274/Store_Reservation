@@ -1,0 +1,11 @@
+###
+POST http://localhost:8080/reservation?storeName=store
+Authorization: Bearer
+
+###
+POST http://localhost:8080/reservation/cancel?storeName=store
+Authorization: Bearer
+
+###
+POST http://localhost:8080/reservation/showList
+Authorization: Bearer

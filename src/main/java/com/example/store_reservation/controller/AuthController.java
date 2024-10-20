@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
-@RequestMapping("auth")
+@RequestMapping("/auth")
 @RestController
 public class AuthController {
 
@@ -19,7 +19,7 @@ public class AuthController {
     private final TokenProvider tokenProvider;
 
     // 회원 가입
-    @PostMapping("signUp")
+    @PostMapping("/signUp")
     public ResponseEntity<?> signUp(@RequestBody AuthRequest.SignUp request) {
         var result = userService.register(request);
 
@@ -27,7 +27,7 @@ public class AuthController {
     }
 
     // 로그인
-    @PostMapping("signIn")
+    @PostMapping("/signIn")
     public ResponseEntity<?> signIn(@RequestBody AuthRequest.SignIn request) {
         var user = userService.authenticate(request);
         var token = tokenProvider.generateToken(user.getUsername(), user.getRoles());

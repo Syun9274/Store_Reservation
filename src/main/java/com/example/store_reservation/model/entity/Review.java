@@ -1,18 +1,19 @@
 package com.example.store_reservation.model.entity;
 
-import com.example.store_reservation.model.enums.ReservationStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity(name = "reservations")
-public class Reservation {
+@Entity(name = "reviews")
+public class Review {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +27,9 @@ public class Reservation {
     @JoinColumn(name = "store_id", nullable = false)
     private Store store;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private ReservationStatus reservationStatus;
+    @Column
+    private String content;
+
+    @Column
+    private LocalDateTime reviewDate;
 }
