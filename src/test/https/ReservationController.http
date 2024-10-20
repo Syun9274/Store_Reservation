@@ -1,5 +1,5 @@
 ###
-POST http://localhost:8080/reservation?storeName=store
+POST http://localhost:8080/reservation?storeName=store2
 Authorization: Bearer
 
 ###
@@ -11,9 +11,9 @@ GET http://localhost:8080/reservation/showList
 Authorization: Bearer
 
 ###
-POST http://localhost:8080/reservation/checkIn?storeName=store
+POST http://localhost:8080/reservation/checkIn?storeName=store1
 Authorization: Bearer
 
 ###
-POST http://localhost:8080/reservation/checkOut?storeName=store
+POST http://localhost:8080/reservation/checkOut?storeName=store1
 Authorization: Bearer
