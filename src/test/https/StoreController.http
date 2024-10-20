@@ -1,0 +1,16 @@
+###
+POST http://localhost:8080/store/create
+Content-Type: application/json
+Authorization: Bearer
+
+{
+  "storeName": "store",
+  "storeAddress": "매장 주소 test",
+  "description": "매장 설명 test"
+}
+
+###
+GET http://localhost:8080/store/search/all
+
+###
+GET http://localhost:8080/store/search?keyword=test
