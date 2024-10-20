@@ -1,9 +1,12 @@
 package com.example.store_reservation.controller;
 
+import com.example.store_reservation.model.entity.Reservation;
 import com.example.store_reservation.service.ReservationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,7 +22,10 @@ public class ReservationController {
     @PreAuthorize("hasAnyRole('USER', 'PARTNERSHIP')")
     @PostMapping
     public ResponseEntity<?> reservation(@RequestParam("storeName") String storeName) {
-        return null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Reservation reservation = reservationService.newReservation(authentication, storeName);
+
+        return ResponseEntity.ok(reservation);
     }
 
     @PreAuthorize("hasAnyRole('USER', 'PARTNERSHIP')")

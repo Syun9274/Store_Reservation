@@ -4,7 +4,7 @@ Content-Type: application/json
 Authorization: Bearer
 
 {
-  "storeName": "매장 이름 test",
+  "storeName": "test",
   "storeAddress": "매장 주소 test",
   "description": "매장 설명 test"
 }
