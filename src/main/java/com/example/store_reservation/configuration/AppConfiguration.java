@@ -1,4 +1,4 @@
-package com.example.store_reservation.config;
+package com.example.store_reservation.configuration;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
@@ -7,7 +7,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
-public class AppConfig {
+public class AppConfiguration {
 
     @Bean
     public ModelMapper modelMapper() {
