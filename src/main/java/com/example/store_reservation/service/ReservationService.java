@@ -72,4 +72,36 @@ public class ReservationService {
                 .status(reservation.getReservationStatus())
                 .build());
     }
+
+    @Transactional
+    public Reservation checkInStore(Authentication authentication, String storeName) {
+        String username = authentication.getName();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자(" + username + ")를 찾을 수 없습니다."));
+
+        Store store = storeRepository.findByStoreName(storeName)
+                .orElseThrow(() -> new IllegalArgumentException("해당 매장(" + storeName + ")을 찾을 수 없습니다."));
+
+        Reservation reservation = reservationRepository.findByUserAndStoreAndReservationStatus(user, store, ReservationStatus.CONFIRMED)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자와 매장에 대한 예약을 찾을 수 없습니다."));
+
+        reservation.setReservationStatus(ReservationStatus.CHECKED_IN);
+        return reservationRepository.save(reservation);
+    }
+
+    @Transactional
+    public Reservation checkOutStore(Authentication authentication, String storeName) {
+        String username = authentication.getName();
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자(" + username + ")를 찾을 수 없습니다."));
+
+        Store store = storeRepository.findByStoreName(storeName)
+                .orElseThrow(() -> new IllegalArgumentException("해당 매장(" + storeName + ")을 찾을 수 없습니다."));
+
+        Reservation reservation = reservationRepository.findByUserAndStoreAndReservationStatus(user, store, ReservationStatus.CONFIRMED)
+                .orElseThrow(() -> new IllegalArgumentException("해당 사용자와 매장에 대한 예약을 찾을 수 없습니다."));
+
+        reservation.setReservationStatus(ReservationStatus.CHECKED_OUT);
+        return reservationRepository.save(reservation);
+    }
 }

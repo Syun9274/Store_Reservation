@@ -52,13 +52,18 @@ public class ReservationController {
     @PreAuthorize("hasAnyRole('USER', 'PARTNERSHIP')")
     @PostMapping("/checkIn")
     public ResponseEntity<?> checkInReservation(@RequestParam("storeName") String storeName) {
-        return null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Reservation reservation = reservationService.checkInStore(authentication, storeName);
+
+        return ResponseEntity.ok(reservation);
     }
 
     @PreAuthorize("hasAnyRole('USER', 'PARTNERSHIP')")
-    @PostMapping("/review")
-    public ResponseEntity<?> writeReview(@RequestParam("storeName") String storeName) {
-        return null;
-    }
+    @PostMapping("/checkOut")
+    public ResponseEntity<?> checkOutReservation(@RequestParam("storeName") String storeName) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Reservation reservation = reservationService.checkOutStore(authentication, storeName);
 
+        return ResponseEntity.ok(reservation);
+    }
 }
