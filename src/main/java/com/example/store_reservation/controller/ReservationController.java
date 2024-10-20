@@ -25,7 +25,7 @@ public class ReservationController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Reservation reservation = reservationService.newReservation(authentication, storeName);
 
-        return ResponseEntity.ok(reservation);
+        return ResponseEntity.ok().body(reservation);
     }
 
     @PreAuthorize("hasAnyRole('USER', 'PARTNERSHIP')")
@@ -34,7 +34,7 @@ public class ReservationController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Reservation reservation = reservationService.cancelReservation(authentication, storeName);
 
-        return ResponseEntity.ok(reservation);
+        return ResponseEntity.ok().body(reservation);
     }
 
     @PreAuthorize("hasAnyRole('USER', 'PARTNERSHIP')")
@@ -43,7 +43,7 @@ public class ReservationController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Page<ReservationDTO> reservationList = reservationService.getAllReservations(authentication, pageable);
 
-        return ResponseEntity.ok(reservationList);
+        return ResponseEntity.ok().body(reservationList);
     }
 
     @PreAuthorize("hasAnyRole('USER', 'PARTNERSHIP')")
@@ -52,7 +52,7 @@ public class ReservationController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Reservation reservation = reservationService.checkInStore(authentication, storeName);
 
-        return ResponseEntity.ok(reservation);
+        return ResponseEntity.ok().body(reservation);
     }
 
     @PreAuthorize("hasAnyRole('USER', 'PARTNERSHIP')")
@@ -61,6 +61,6 @@ public class ReservationController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Reservation reservation = reservationService.checkOutStore(authentication, storeName);
 
-        return ResponseEntity.ok(reservation);
+        return ResponseEntity.ok().body(reservation);
     }
 }

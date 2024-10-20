@@ -1,5 +1,8 @@
 package com.example.store_reservation.service;
 
+import com.example.store_reservation.exception.custom.AuthException;
+import com.example.store_reservation.exception.custom.ReservationException;
+import com.example.store_reservation.exception.custom.ReviewException;
 import com.example.store_reservation.model.entity.Review;
 import com.example.store_reservation.model.entity.Store;
 import com.example.store_reservation.model.entity.User;
@@ -28,12 +31,12 @@ public class ReviewService {
     private User findUserByAuthentication(Authentication authentication) {
         String username = authentication.getName();
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자(" + username + ")를 찾을 수 없습니다."));
+                .orElseThrow(AuthException.NotMatchUserInfoException::new);
     }
 
     private Store findStoreByName(String storeName) {
         return storeRepository.findByStoreName(storeName)
-                .orElseThrow(() -> new IllegalArgumentException("해당 매장(" + storeName + ")을 찾을 수 없습니다."));
+                .orElseThrow(AuthException.NotMatchStoreInfoException::new);
     }
 
     @Transactional
@@ -43,12 +46,12 @@ public class ReviewService {
 
         boolean checkOutReservationExists = reservationRepository.existsByUserAndStoreAndReservationStatus(user, store, ReservationStatus.CHECKED_OUT);
         if (!checkOutReservationExists) {
-            throw new IllegalArgumentException("리뷰 작성 가능한 예약이 없습니다.");
+            throw new ReservationException.NotFoundReservationException();
         }
 
         boolean reviewExists = reviewRepository.existsByUserAndStore(user, store);
         if (reviewExists) {
-            throw new IllegalArgumentException("이미 해당 매장에 대한 리뷰를 작성하셨습니다.");
+            throw new ReviewException.AlreadyExistsReviewException();
         }
 
         return reviewRepository.save(Review.builder()
@@ -65,7 +68,7 @@ public class ReviewService {
         Store store = findStoreByName(storeName);
 
         Review review = reviewRepository.findByUserAndStore(user, store)
-                .orElseThrow(() -> new IllegalArgumentException("해당 매장에 대한 작성된 리뷰가 없습니다."));
+                .orElseThrow(ReviewException.NotFoundReviewException::new);
 
         reviewRepository.delete(review);
         return review;

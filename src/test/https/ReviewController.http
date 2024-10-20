@@ -1,0 +1,13 @@
+###
+POST http://localhost:8080/review?storeName=store
+Content-Type: application/json
+Authorization: Bearer
+
+
+{
+  "contents": "review test"
+}
+
+###
+POST http://localhost:8080/review/delete?storeName=store
+Authorization: Bearer

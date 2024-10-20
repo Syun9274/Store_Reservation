@@ -1,6 +1,7 @@
 package com.example.store_reservation.service;
 
-import com.example.store_reservation.exception.custom.UserException.NotExistUserException;
+import com.example.store_reservation.exception.custom.AuthException;
+import com.example.store_reservation.exception.custom.UserException;
 import com.example.store_reservation.model.entity.User;
 import com.example.store_reservation.model.request.AuthRequest;
 import com.example.store_reservation.repository.UserRepository;
@@ -24,14 +25,14 @@ public class UserService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByUsername(username)
-                .orElseThrow(NotExistUserException::new);
+                .orElseThrow(UserException.NotExistUserException::new);
     }
 
     @Transactional
     public User register(AuthRequest.SignUp request) {
         boolean exists = userRepository.existsByUsername(request.getUsername());
         if (exists) {
-            throw new RuntimeException();
+            throw new UserException.AlreadyExistUserException();
         }
 
         request.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -41,10 +42,10 @@ public class UserService implements UserDetailsService {
 
     public User authenticate(AuthRequest.SignIn request) {
         var user = userRepository.findByUsername(request.getUsername())
-                .orElseThrow(NotExistUserException::new);
+                .orElseThrow(UserException.NotExistUserException::new);
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new RuntimeException();
+            throw new AuthException.WrongAuthInfoException();
         }
 
         return user;
