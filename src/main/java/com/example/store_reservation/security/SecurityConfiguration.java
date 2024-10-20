@@ -25,7 +25,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/auth/signUp", "/auth/signIn", "store/search", "store/search/all").permitAll()  // 특정 요청 허용
+                        .requestMatchers("/auth/signUp", "/auth/signIn", "/store/search", "/store/search/all").permitAll()  // 특정 요청 허용
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
