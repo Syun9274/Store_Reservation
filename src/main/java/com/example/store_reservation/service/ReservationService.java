@@ -1,5 +1,7 @@
 package com.example.store_reservation.service;
 
+import com.example.store_reservation.exception.custom.AuthException;
+import com.example.store_reservation.exception.custom.ReservationException;
 import com.example.store_reservation.model.dto.ReservationDTO;
 import com.example.store_reservation.model.entity.Reservation;
 import com.example.store_reservation.model.entity.Store;
@@ -26,12 +28,12 @@ public class ReservationService {
     private User findUserByAuthentication(Authentication authentication) {
         String username = authentication.getName();
         return userRepository.findByUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자(" + username + ")를 찾을 수 없습니다."));
+                .orElseThrow(AuthException.NotMatchUserInfoException::new);
     }
 
     private Store findStoreByName(String storeName) {
         return storeRepository.findByStoreName(storeName)
-                .orElseThrow(() -> new IllegalArgumentException("해당 매장(" + storeName + ")을 찾을 수 없습니다."));
+                .orElseThrow(AuthException.NotMatchStoreInfoException::new);
     }
 
     private Reservation checkReservation(Authentication authentication, String storeName, ReservationStatus status) {
@@ -39,7 +41,7 @@ public class ReservationService {
         Store store = findStoreByName(storeName);
 
         return reservationRepository.findByUserAndStoreAndReservationStatus(user, store, status)
-                .orElseThrow(() -> new IllegalArgumentException("해당 사용자와 매장에 대한 예약을 찾을 수 없습니다."));
+                .orElseThrow(ReservationException.NotFoundReservationException::new);
     }
 
     @Transactional
@@ -49,7 +51,7 @@ public class ReservationService {
 
         boolean reservationExists = reservationRepository.existsByUserAndStoreAndReservationStatus(user, store, ReservationStatus.CONFIRMED);
         if (reservationExists) {
-            throw new IllegalArgumentException("해당 사용자(" + user.getUsername() + ")는 이미 매장(" + storeName + ")에 예약이 완료된 상태입니다.");
+            throw new ReservationException.AlreadyReservationException();
         }
 
         return reservationRepository.save(Reservation.builder()
