@@ -1,0 +1,28 @@
+###
+POST http://localhost:8080/auth/signUp
+Content-Type: application/json
+
+{
+  "username": "test",
+  "password": "test",
+  "roles": ["ROLE_USER"]
+}
+
+###
+POST http://localhost:8080/auth/signUp
+Content-Type: application/json
+
+{
+  "username": "test",
+  "password": "test",
+  "roles": ["ROLE_PARTNERSHIP"]
+}
+
+###
+POST http://localhost:8080/auth/signIn
+Content-Type: application/json
+
+{
+  "username": "test",
+  "password": "test"
+}

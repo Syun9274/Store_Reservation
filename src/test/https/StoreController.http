@@ -1,6 +1,7 @@
 ###
 POST http://localhost:8080/store/create
 Content-Type: application/json
+Authorization: Bearer
 
 {
   "storeName": "매장 이름 test",

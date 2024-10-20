@@ -13,3 +13,7 @@ spring:
     username: root
     password:
     driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jwt:
+    # Base64 인코딩 (StoreReservationSpringBootProjectJWTTokenSecretKeyBase64OriginalKey)
+    secret: U3RvcmVSZXNlcnZhdGlvblNwcmluZ0Jvb3RQcm9qZWN0SldUVG9rZW5TZWNyZXRLZXlCYXNlNjRPcmlnaW5hbEtleQ==

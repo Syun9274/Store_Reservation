@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
@@ -17,6 +18,7 @@ public class StoreController {
 
     private final StoreService storeService;
 
+    @PreAuthorize("hasRole('PARTNERSHIP')")
     @PostMapping("/create")
     public ResponseEntity<?> createStore(@RequestBody AddStoreRequest request) {
         Store store = storeService.saveStore(request);
